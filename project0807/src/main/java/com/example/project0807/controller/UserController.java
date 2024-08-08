@@ -38,4 +38,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body(added);
         }
     }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<User> delete(@PathVariable Long id) {
+        User target = userRepository.findById(id).orElse(null);
+        if (target == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
+        else {
+            userRepository.delete(target);
+
+            return ResponseEntity.status(HttpStatus.OK).body(target);
+        }
+    }
 }
