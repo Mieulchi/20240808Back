@@ -47,8 +47,22 @@ public class UserController {
         }
         else {
             userRepository.delete(target);
-
             return ResponseEntity.status(HttpStatus.OK).body(target);
         }
+    }
+
+    @PatchMapping("/user/{id}")
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserForm dto) {
+        User target = userRepository.findById(id).orElse(null);
+
+        if (target == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
+
+        target.patch(dto.toEntity());
+
+        User updated = userRepository.save(target);
+
+        return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
 }

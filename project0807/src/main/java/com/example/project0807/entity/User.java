@@ -43,4 +43,13 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void patch(User user) {
+        if (user.name != null) {
+            this.name = user.name;
+        }
+        if (user.email != null) {
+            this.email = user.email;
+        }
+    }
 }
